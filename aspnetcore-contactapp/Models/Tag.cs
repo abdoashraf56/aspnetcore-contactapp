@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace aspnetcore_contactapp.Models
 {
-    public class TagModel
+    public class Tag
     {
+        [Key]
         public Guid TagID { get; set; }
 
         public string Name { get; set; }

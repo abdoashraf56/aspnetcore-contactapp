@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using aspnetcore_contactapp.Models;
 
 namespace aspnetcore_contactapp.Data
 {
@@ -17,5 +18,8 @@ namespace aspnetcore_contactapp.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<Contact> Contacts {get; set;}
+        public DbSet<Tag> Tags {get; set;}
     }
 }

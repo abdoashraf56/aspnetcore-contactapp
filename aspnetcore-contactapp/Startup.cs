@@ -11,6 +11,7 @@ using aspnetcore_contactapp.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using aspnetcore_contactapp.Services;
 
 namespace aspnetcore_contactapp
 {
@@ -38,6 +39,10 @@ namespace aspnetcore_contactapp
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddScoped<IRepository<Contact> , ContactRepository>();
+            
+            services.AddScoped<IRepository<Tag> , TagRepository>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
