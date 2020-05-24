@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using aspnetcore_contactapp.Services;
 using aspnetcore_contactapp.Models;
+using System.IO;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Net;
 
 namespace aspnetcore_contactapp.Controllers
 {
@@ -25,7 +27,42 @@ namespace aspnetcore_contactapp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Contact>>> GetContacts()
         {
+            // await AddDataLocalyFromJSON();
+
             return await _repository.Get();
+        }
+
+        private async Task AddDataLocalyFromJSON()
+        {
+            using (StreamReader r = new StreamReader("Data.json"))
+            {
+                string json = await r.ReadToEndAsync();
+                var result = JsonConvert.DeserializeObject<Respond>(json);
+
+                foreach (var item in result.results)
+                {
+                    var contact = new Contact
+                    {
+                        ConatctID = Guid.NewGuid(),
+                        FirstName = item.name.first,
+                        LastName = item.name.last,
+                        Email = item.email,
+                        PhoneNumber = item.phone,
+                        Avatar = await GetImage(item.picture.large)
+                    };
+
+                    await _repository.Add(contact);
+                }
+            }
+        }
+
+        private async Task<byte[]> GetImage(string large)
+        {
+            using (WebClient c = new WebClient())
+            {
+                Uri uri = new Uri(large);
+                return await c.DownloadDataTaskAsync(uri);
+            }
         }
 
         // GET: api/Contact/5
