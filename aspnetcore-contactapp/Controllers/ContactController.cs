@@ -32,29 +32,29 @@ namespace aspnetcore_contactapp.Controllers
             return await _repository.Get();
         }
 
-        private async Task AddDataLocalyFromJSON()
-        {
-            using (StreamReader r = new StreamReader("Data.json"))
-            {
-                string json = await r.ReadToEndAsync();
-                var result = JsonConvert.DeserializeObject<Respond>(json);
+        // private async Task AddDataLocalyFromJSON()
+        // {
+        //     using (StreamReader r = new StreamReader("Data.json"))
+        //     {
+        //         string json = await r.ReadToEndAsync();
+        //         var result = JsonConvert.DeserializeObject<Respond>(json);
 
-                foreach (var item in result.results)
-                {
-                    var contact = new Contact
-                    {
-                        ConatctID = Guid.NewGuid(),
-                        FirstName = item.name.first,
-                        LastName = item.name.last,
-                        Email = item.email,
-                        PhoneNumber = item.phone,
-                        Avatar = await GetImage(item.picture.large)
-                    };
+        //         foreach (var item in result.results)
+        //         {
+        //             var contact = new Contact
+        //             {
+        //                 ConatctID = Guid.NewGuid(),
+        //                 FirstName = item.name.first,
+        //                 LastName = item.name.last,
+        //                 Email = item.email,
+        //                 PhoneNumber = item.phone,
+        //                 Avatar = await GetImage(item.picture.large)
+        //             };
 
-                    await _repository.Add(contact);
-                }
-            }
-        }
+        //             await _repository.Add(contact);
+        //         }
+        //     }
+        // }
 
         private async Task<byte[]> GetImage(string large)
         {
