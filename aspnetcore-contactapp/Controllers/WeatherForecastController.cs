@@ -11,16 +11,16 @@ namespace aspnetcore_contactapp.Controllers
     // [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class ContactController : ControllerBase
+    public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<ContactController> _logger;
+        private readonly ILogger<WeatherForecastController> _logger;
 
-        public ContactController(ILogger<ContactController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
