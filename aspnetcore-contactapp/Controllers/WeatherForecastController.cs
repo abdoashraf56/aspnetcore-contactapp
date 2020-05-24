@@ -8,19 +8,19 @@ using Microsoft.Extensions.Logging;
 
 namespace aspnetcore_contactapp.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class ContactController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<ContactController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public ContactController(ILogger<ContactController> logger)
         {
             _logger = logger;
         }
