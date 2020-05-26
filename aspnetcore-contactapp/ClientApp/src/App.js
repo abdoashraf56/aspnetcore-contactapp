@@ -10,6 +10,8 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 
 import './custom.css'
 import LandingPage from './components/villages/LandingPage';
+import  Navbar  from './components/sections/Navbar';
+
 
 export default class App extends Component {
   static displayName = App.name;
@@ -23,8 +25,9 @@ export default class App extends Component {
       //   <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       // </Layout>
       <div>
+        <Navbar links={["about", "Pro version" , "Sign up" , "Sign in"]}/>
         <Route exact path='/' component={LandingPage} />
-        <Route exact path='/home' component={Home} />
+        <Route  path='/home' component={Home} />
       </div>
     );
   }
