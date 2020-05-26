@@ -1,0 +1,15 @@
+:root{
+    --dark-color : #2471a3  ;
+    --primary-color : #2980b9;
+    --light-color : #7fb3d5 ;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navigation {
+    background-color: var(--dark-color);
+}
