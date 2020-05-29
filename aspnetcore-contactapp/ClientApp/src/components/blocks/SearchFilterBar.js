@@ -12,7 +12,7 @@ class SearchFilterBar extends React.Component {
                <IconAction IconType="icon-plus"/>
 
                 {/* <!-- Tag Icon --> */}
-                <TagIconDropdown />
+                <TagIconDropdown handle={this.props.handle}/>
 
                 <IconAction IconType="icon-dots"/>
             </div>

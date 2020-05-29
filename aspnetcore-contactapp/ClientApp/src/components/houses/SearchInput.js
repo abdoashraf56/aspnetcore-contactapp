@@ -5,7 +5,7 @@ class SearchInput extends React.Component {
      handle = (e) => {
          const str = e.target.value
          this.props.handle(
-             (a , v)=> a.firstName.includes(v) || a.firstName.includes(v)
+             (a , v)=> a.firstName.toLowerCase().includes(v) || a.lastName.toLowerCase().includes(v)
                 , 
             str 
             )
