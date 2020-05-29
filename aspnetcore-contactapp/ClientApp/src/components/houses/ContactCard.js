@@ -6,7 +6,7 @@ class ContactCard extends React.Component {
         return (
             <div className="m-card">
                 <div className="card-avatar">
-                    <img className="card-avatar-img" src={this.props.avatar || male_avatar} alt="avatar" srcset="" />
+                    <img className="card-avatar-img" src={`data:image/png;base64,${this.props.avatar}` || male_avatar} alt="avatar" srcset="" />
                 </div>
                 <div className="card-details">
                     <div className="card-title">{this.props.name}</div>

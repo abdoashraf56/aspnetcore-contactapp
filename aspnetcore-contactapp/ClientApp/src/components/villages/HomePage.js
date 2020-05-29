@@ -3,31 +3,44 @@ import female_avatar from '../../images/female_avatar.svg'
 import avatar from '../../images/avatar-profile.svg'
 import ContactList from '../sections/ContactList'
 import Spinner from '../houses/Spinner'
+import { GetData } from '../../Repository/Repository'
 
 
 class HomePage extends React.Component {
-    state = {data : {} , loading : false }
+    state = { data: {} , filterdata : {}, loading: true }
 
-    componentDidMount(){
-        this.getData()
+    componentDidMount() {
+        setTimeout(()=>{
+            this.getData()
+        } , 1500)
     }
 
-    async getData(){
-        const response = await fetch('api/contact')
-        const data = await response.json();
+    getData() {
+        const data = GetData()
         this.setState((prevState) => {
-            return {data : data , loading : false }
+            console.log(data)
+            return { data: data, filterdata : data , loading: false }
+        })
+    }
+
+
+    filterData = (func ,v) =>{
+        this.setState((prevState) => {
+            return { filterdata: prevState.data.filter(a => func(a , v))}
         })
     }
 
     render() {
         return (
             <section className="home-page">
-                
-                {this.state.loading ? <div className="spin-container"><Spinner /></div> 
-                :   <ContactList list = {this.state.data}/>
+
+                {this.state.loading ? <div className="spin-container"><Spinner /></div>
+                    : <ContactList 
+                        list={this.state.filterdata} 
+                        handle = {this.filterData}
+                    />
                 }
-                
+
 
                 {/* <!-- Details Page--> */}
                 <div className="details-page">
@@ -78,8 +91,8 @@ class HomePage extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>   
-        </section >
+                </div>
+            </section >
         )
     }
 }

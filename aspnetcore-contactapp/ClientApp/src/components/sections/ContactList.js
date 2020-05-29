@@ -7,7 +7,7 @@ class ContactList extends React.Component {
     render() {
         return (
             <div className="contact-list">
-               <SearchFilterBar />
+               <SearchFilterBar handle={this.props.handle}/>
 
                 <ContactItems items={this.props.list}/>
             </div>

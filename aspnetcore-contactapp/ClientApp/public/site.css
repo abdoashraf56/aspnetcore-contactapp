@@ -338,6 +338,7 @@ body {
 .card-avatar-img{
     width: 80%;
     height: 80%;
+    border-radius: 50%;
 }
 
 .card-details{

@@ -7,7 +7,7 @@ class SearchFilterBar extends React.Component {
     render() {
         return (
             <div className="search-filter">
-            <SearchInput />
+            <SearchInput handle={this.props.handle}/>
 
                <IconAction IconType="icon-plus"/>
 

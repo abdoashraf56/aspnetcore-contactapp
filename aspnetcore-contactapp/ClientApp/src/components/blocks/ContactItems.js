@@ -9,8 +9,8 @@ class ContactItems extends React.Component {
             {this.props.items.map((i , k) => {
                 return (
                    <ContactCard 
-                        name = {i.name}
-                        lable = {i.lable}
+                        name = {`${i.firstName} ${i.lastName}`}
+                        lable = {i.lable || "Accountants"}
                         avatar = {i.avatar}
                    />
                 )
