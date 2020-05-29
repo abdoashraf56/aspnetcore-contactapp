@@ -11,6 +11,7 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 import './custom.css'
 import LandingPage from './components/villages/LandingPage';
 import  Navbar  from './components/sections/Navbar';
+import HomePage from './components/villages/HomePage';
 
 
 export default class App extends Component {
@@ -27,7 +28,7 @@ export default class App extends Component {
       <div>
         <Navbar links={["about", "Pro version" , "Sign up" , "Sign in"]}/>
         <Route exact path='/' component={LandingPage} />
-        <Route  path='/home' component={Home} />
+        <Route  path='/home' component={HomePage} />
       </div>
     );
   }
