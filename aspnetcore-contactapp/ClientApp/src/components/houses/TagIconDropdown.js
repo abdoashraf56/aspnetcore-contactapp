@@ -21,9 +21,12 @@ class TagIconDropdown extends React.Component {
             <button className={`icon icon-tag dropdown-toggle`} type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <h6 className="dropdown-header">Tags</h6>
-                <a onClick={this.handle} className="dropdown-item">ALL</a>
-                <a onClick={this.handle} className="dropdown-item">Family</a>
-                <a onClick={this.handle} className="dropdown-item">Co-worker</a>
+                
+                {
+                    this.props.tags.map((i,k) => {
+                        return <a onClick={this.handle} className="dropdown-item" key={i.id}>{i.tag}</a>
+                    })
+                }
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item create-new-item" href="#">Create New</a>
             </div>

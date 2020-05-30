@@ -1,7 +1,8 @@
 import React from 'react'
 import SearchInput from '../houses/SearchInput'
-import IconAction from '../houses/IconAction'
+
 import TagIconDropdown from '../houses/TagIconDropdown'
+import IconAction from '../houses/IconAction'
 
 class SearchFilterBar extends React.Component {
     render() {
@@ -9,12 +10,15 @@ class SearchFilterBar extends React.Component {
             <div className="search-filter">
             <SearchInput handle={this.props.handle}/>
 
-               <IconAction IconType="icon-plus"/>
+               <IconAction 
+                    IconType="icon-plus" 
+                    switchInptpage = {this.props.switchInptpage}
+                />
 
                 {/* <!-- Tag Icon --> */}
-                <TagIconDropdown handle={this.props.handle}/>
+                <TagIconDropdown handle={this.props.handle}  tags={this.props.tags}/>
 
-                <IconAction IconType="icon-dots"/>
+                <IconAction IconType="icon-dots" switchInptpage={()=>{}}/>
             </div>
         )
     }

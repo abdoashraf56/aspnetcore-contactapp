@@ -1,13 +1,19 @@
 import React from 'react'
-import female_avatar from '../../images/female_avatar.svg'
-import avatar from '../../images/avatar-profile.svg'
 import ContactList from '../sections/ContactList'
 import Spinner from '../houses/Spinner'
-import { GetData } from '../../Repository/Repository'
+import { GetContactData ,  GetTagData} from '../../Repository/Repository'
+import ContactDetails from '../sections/ContactDetails'
 
 
 class HomePage extends React.Component {
-    state = { data: {} , filterdata : {}, loading: true }
+    state = { 
+        data: {} , 
+        filterdata : {}, 
+        tags : {} , 
+        loading: true  ,
+        current : {},
+        showInsert : false
+    }
 
     componentDidMount() {
         setTimeout(()=>{
@@ -16,10 +22,24 @@ class HomePage extends React.Component {
     }
 
     getData() {
-        const data = GetData()
+        const data = GetContactData()
+        const tags = GetTagData()
         this.setState((prevState) => {
             console.log(data)
-            return { data: data, filterdata : data , loading: false }
+            return { 
+                data: data, 
+                filterdata : data, 
+                tags : tags,
+                loading: false ,
+                current : data[0]
+            }
+        })
+    }
+
+    changeCurrent =(key)=>{
+        this.setState((prevState) => {
+            var SelectedContact = prevState.data.filter(a => a.conatctID === key)[0]
+            return { current: SelectedContact}
         })
     }
 
@@ -27,6 +47,12 @@ class HomePage extends React.Component {
     filterData = (func ,v) =>{
         this.setState((prevState) => {
             return { filterdata: prevState.data.filter(a => func(a , v))}
+        })
+    }
+
+    showInputPage = ()=>{
+        this.setState((prevState) => {
+            return { showInsert: !prevState.showInsert}
         })
     }
 
@@ -38,60 +64,24 @@ class HomePage extends React.Component {
                     : <ContactList 
                         list={this.state.filterdata} 
                         handle = {this.filterData}
+                        tags = {this.state.tags}
+                        switchInptpage = {this.showInputPage}
+                        changeCurrent = {this.changeCurrent}
                     />
                 }
 
 
                 {/* <!-- Details Page--> */}
-                <div className="details-page">
-                    <div className="details-header">
-                        {/* <!-- Option menu --> */}
-                        <div className="tag  icon-hloder dropdown">
-                            <button className="icon icon-dots dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <h6 className="dropdown-header">Options</h6>
-                                <a className="dropdown-item" href="#">Delete</a>
-                                <a className="dropdown-item" href="#">Edit</a>
-                                <a className="dropdown-item" href="#">Share</a>
-                            </div>
-                        </div>
-
-                        <div className="details-avatar">
-                            <img className="card-avatar-img" src={female_avatar} alt="avatr" srcset="" />
-                        </div>
-                        <div className="details-details">
-                            <div className="card-title">Abdo Ashraf</div>
-                            <div className="card-subtitle">Accountant at company</div>
-                        </div>
-                        <div className="remain-details">
-                            <div className="col-50 email">
-                                <div className="icon-noaction icon-email"></div>
-                                <a className="details-item" href="mailto:abdo.ashraf975@gmail.com">abdo.ashraf975@gmail.com</a>
-                            </div>
-                            <div className="col-50">
-                                <div className="icon-noaction icon-phone"></div>
-                                <div className="details-item">01003548169</div>
-                            </div>
-                            <div className="col-50">
-                                <div className="icon-noaction icon-twitter"></div>
-                                <a className="details-item" href="https://twitter.com/nbarbettini" target="_blank" rel="noopener noreferrer">@nbarbettini</a>
-                            </div>
-                            <div className="col-50">
-                                <div className="icon-noaction icon-web"></div>
-                                <a className="details-item" href="https://trello.com" target="_blank" rel="noopener noreferrer">https://trello.com</a>
-                            </div>
-                            <div className="col-50">
-                                <div className="icon-noaction icon-facebook"></div>
-                                <a className="details-item" href="https://www.facebook.com/nbarbettini" target="_blank" rel="noopener noreferrer">@nbarbettini</a>
-                            </div>
-
-                            <div className="col-50">
-                                <div className="icon-noaction icon-tag"></div>
-                                <div className="details-item upper">Family</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {
+                    this.state.showInsert ? 
+                    (
+                        <div>Input Page</div>
+                    ) : 
+                    (
+                        <ContactDetails current={this.state.current}/>
+                    )
+                }
+                
             </section >
         )
     }

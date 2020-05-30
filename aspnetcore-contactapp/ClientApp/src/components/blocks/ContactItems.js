@@ -10,8 +10,11 @@ class ContactItems extends React.Component {
                 return (
                    <ContactCard 
                         name = {`${i.firstName} ${i.lastName}`}
-                        lable = {i.lable || "Accountants"}
+                        lable = {i.lable}
                         avatar = {i.avatar}
+                        key={i.conatctID}
+                        conatctID ={i.conatctID}
+                        changeCurrent = {this.props.changeCurrent}
                    />
                 )
             })}
