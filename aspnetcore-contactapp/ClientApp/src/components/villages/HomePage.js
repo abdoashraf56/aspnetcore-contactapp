@@ -3,6 +3,7 @@ import ContactList from '../sections/ContactList'
 import Spinner from '../houses/Spinner'
 import { GetContactData ,  GetTagData} from '../../Repository/Repository'
 import ContactDetails from '../sections/ContactDetails'
+import AddContact from '../sections/AddContact'
 
 
 class HomePage extends React.Component {
@@ -75,10 +76,10 @@ class HomePage extends React.Component {
                 {
                     this.state.showInsert ? 
                     (
-                        <div>Input Page</div>
+                        <AddContact tempale={this.state.data[0]} options={this.state.tags}/>
                     ) : 
                     (
-                        <ContactDetails current={this.state.current}/>
+                        <ContactDetails current={this.state.current} />
                     )
                 }
                 
