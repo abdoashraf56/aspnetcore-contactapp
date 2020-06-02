@@ -3,7 +3,13 @@ import female_avatar from '../../images/female_avatar.svg'
 import avatar from '../../images/avatar-profile.svg'
 
 class ContactDetails extends React.Component {
+    EditContact = ()=>{
+        this.props.EditContact()
+    }
 
+    DeleteContact = () => {
+        this.props.DeleteContact()
+    }
     render() {
         const { current } = this.props
         const {firstName,
@@ -24,9 +30,9 @@ class ContactDetails extends React.Component {
                         <button className="icon icon-dots dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <h6 className="dropdown-header">Options</h6>
-                            <a className="dropdown-item" href="#">Delete</a>
-                            <a className="dropdown-item" href="#">Edit</a>
-                            <a className="dropdown-item" href="#">Share</a>
+                            <a  onClick={this.DeleteContact} className="dropdown-item" >Delete</a>
+                            <a className="dropdown-item" >Edit</a>
+                            <a className="dropdown-item" >Share</a>
                         </div>
                     </div>
 

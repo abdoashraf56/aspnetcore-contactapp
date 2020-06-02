@@ -6,7 +6,7 @@ class ActionButton extends React.Component {
     render() {
         return (
             <Link to={this.props.action.path}>
-                <button style={{textTransform:"uppercase"}} class="action">
+                <button style={{textTransform:"uppercase"}} className="action">
                     {this.props.action.text}
                 </button>
             </Link>

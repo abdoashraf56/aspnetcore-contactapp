@@ -49,7 +49,7 @@ body {
 
 
 .navigation{
-    padding-bottom: 35px;
+    padding-bottom: 1rem;
     margin-bottom: 1rem;
     display: flex;
     flex-wrap: wrap;

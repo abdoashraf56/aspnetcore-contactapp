@@ -7,7 +7,7 @@ class AddContact extends React.Component {
     render() {
         return (
             <div class="input-page">
-                <form action="#" method="GET" enctype="multipart/form-data">
+                <form action="#" method="POST" enctype="multipart/form-data">
 
 
                     {
@@ -36,7 +36,7 @@ class AddContact extends React.Component {
                         })
                     }
 
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Save</button>
                 </form>
             </div>
         )
