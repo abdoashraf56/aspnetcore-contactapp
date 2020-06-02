@@ -1,7 +1,7 @@
 import React from 'react'
 import ContactList from '../sections/ContactList'
 import Spinner from '../houses/Spinner'
-import { GetContactData ,  GetTagData} from '../../Repository/Repository'
+import {getData} from '../../Controllers/HomePagController'
 import ContactDetails from '../sections/ContactDetails'
 import AddContact from '../sections/AddContact'
 
@@ -18,15 +18,17 @@ class HomePage extends React.Component {
 
     componentDidMount() {
         setTimeout(()=>{
-            this.getData()
+            this.GetDataFromRepository()
         } , 1500)
     }
 
-    getData() {
-        const data = GetContactData()
-        const tags = GetTagData()
+    /**
+     * Fetch data from the repository
+     * 
+     */
+    GetDataFromRepository() {
+        const {data , tags} = getData()
         this.setState((prevState) => {
-            console.log(data)
             return { 
                 data: data, 
                 filterdata : data, 
@@ -37,6 +39,10 @@ class HomePage extends React.Component {
         })
     }
 
+    /**
+     * Change the current selected contact to selected one
+     * @param {String} key id of the selected contact
+     */
     changeCurrent =(key)=>{
         this.setState((prevState) => {
             var SelectedContact = prevState.data.filter(a => a.conatctID === key)[0]
@@ -45,13 +51,21 @@ class HomePage extends React.Component {
     }
 
 
-    filterData = (func ,v) =>{
+    /**
+     * Filter the data depend of funcation and require key
+     * @param {Function} func the filter function
+     * @param {String} key the filter value
+     */
+    filterData = (func ,key) =>{
         this.setState((prevState) => {
-            return { filterdata: prevState.data.filter(a => func(a , v))}
+            return { filterdata: prevState.data.filter(a => func(a , key))}
         })
     }
 
-    showInputPage = ()=>{
+    /** 
+     * Toggle the input page
+    */
+    ToogleInputPage = ()=>{
         this.setState((prevState) => {
             return { showInsert: !prevState.showInsert}
         })
@@ -66,7 +80,7 @@ class HomePage extends React.Component {
                         list={this.state.filterdata} 
                         handle = {this.filterData}
                         tags = {this.state.tags}
-                        switchInptpage = {this.showInputPage}
+                        switchInptpage = {this.ToogleInputPage}
                         changeCurrent = {this.changeCurrent}
                     />
                 }
