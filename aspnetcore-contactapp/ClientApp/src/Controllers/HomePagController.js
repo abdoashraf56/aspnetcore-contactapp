@@ -1,4 +1,4 @@
-import { GetContactData ,  GetTagData} from '../../Repository/Repository'
+import { GetContactData ,  GetTagData} from '../Repository/Repository'
 
 /**
  * Getting Contact data and tag data from Repository

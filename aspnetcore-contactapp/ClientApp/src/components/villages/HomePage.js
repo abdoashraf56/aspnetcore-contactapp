@@ -24,7 +24,7 @@ class HomePage extends React.Component {
 
     /**
      * Fetch data from the repository
-     * 
+     * And Change the State 
      */
     GetDataFromRepository() {
         const {data , tags} = getData()
@@ -73,29 +73,33 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <section className="home-page">
+            <section>
 
                 {this.state.loading ? <div className="spin-container"><Spinner /></div>
-                    : <ContactList 
+                    : 
+                    <div className="home-page">
+                    <ContactList 
                         list={this.state.filterdata} 
                         handle = {this.filterData}
                         tags = {this.state.tags}
                         switchInptpage = {this.ToogleInputPage}
                         changeCurrent = {this.changeCurrent}
                     />
+                    {
+                        this.state.showInsert ? 
+                        (
+                            <AddContact tempale={this.state.data[0]} options={this.state.tags}/>
+                        ) : 
+                        (
+                            <ContactDetails current={this.state.current} />
+                        )
+                    }
+                    </div>
                 }
 
 
                 {/* <!-- Details Page--> */}
-                {
-                    this.state.showInsert ? 
-                    (
-                        <AddContact tempale={this.state.data[0]} options={this.state.tags}/>
-                    ) : 
-                    (
-                        <ContactDetails current={this.state.current} />
-                    )
-                }
+                
                 
             </section >
         )
