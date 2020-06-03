@@ -13,7 +13,7 @@ class AddContact extends React.Component {
                     {
                         Object.keys(this.props.tempale).map((k, i) => {
                             if (k === "email") {
-                                return <InputFormGroup title={k} type={"email"} />
+                                return <InputFormGroup value={this.props.tempale[k]} title={k} type={"email"} />
                             }
 
                             if( k == "conatctID" || k == "tagID") {
@@ -21,18 +21,18 @@ class AddContact extends React.Component {
                             }
 
                             if (k === "phone") {
-                                return <InputFormGroup title={k} type={"tel"} />
+                                return <InputFormGroup value={this.props.tempale[k]} title={k} type={"tel"} />
                             }
 
                             if (k === "tag") {
-                                return <SelectFormGroup title={k} options={this.props.options} />
+                                return <SelectFormGroup value={this.props.tempale[k]} title={k} options={this.props.options} />
                             }
                            
                             if (k === "avatar") {
                                 return <FileFormGroup title={k} />
                             }
 
-                            return <InputFormGroup title={k} type={"text"} />
+                            return <InputFormGroup value={this.props.tempale[k]} title={k} type={"text"} />
                         })
                     }
 

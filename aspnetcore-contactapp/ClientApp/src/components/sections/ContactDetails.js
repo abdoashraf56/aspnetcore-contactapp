@@ -4,6 +4,7 @@ import avatar from '../../images/avatar-profile.svg'
 
 class ContactDetails extends React.Component {
     EditContact = ()=>{
+        console.log("foo")
         this.props.EditContact()
     }
 
@@ -31,7 +32,7 @@ class ContactDetails extends React.Component {
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <h6 className="dropdown-header">Options</h6>
                             <a  onClick={this.DeleteContact} className="dropdown-item" >Delete</a>
-                            <a className="dropdown-item" >Edit</a>
+                            <a onClick={this.EditContact} className="dropdown-item" >Edit</a>
                             <a className="dropdown-item" >Share</a>
                         </div>
                     </div>

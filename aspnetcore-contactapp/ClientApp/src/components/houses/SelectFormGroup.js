@@ -8,7 +8,9 @@ class SelectFormGroup extends React.Component {
                 <select className="form-control" id={this.props.title} name={this.props.title}>
                     {
                         this.props.options.map(({id , tag},k) => {
-                            return <option value={tag}>{tag}</option>
+                            return <option 
+                            selected={this.props.value === tag} 
+                            value={tag}>{tag}</option>
                         })
                     }
                 </select>

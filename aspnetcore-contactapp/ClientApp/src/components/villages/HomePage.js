@@ -24,6 +24,7 @@ var empty = {
 class HomePage extends React.Component {
     state = { 
         data: [] , 
+        tempale : empty ,
         filterdata : [], 
         tags : [] , 
         loading: true  ,
@@ -83,7 +84,7 @@ class HomePage extends React.Component {
     */
     ToogleInputPage = ()=>{
         this.setState((prevState) => {
-            return { showInsert: !prevState.showInsert}
+            return { showInsert: !prevState.showInsert , tempale : empty}
         })
     }
 
@@ -91,7 +92,10 @@ class HomePage extends React.Component {
      * Edit The current selected contact
     */
     EditContact = ()=>{
-
+        this.setState((prevState) => {
+            console.log(prevState.current)
+            return { showInsert: !prevState.showInsert , tempale :prevState.current}
+        })
     }
     
     /**
@@ -139,7 +143,7 @@ class HomePage extends React.Component {
                     {
                         this.state.showInsert ? 
                         (
-                            <AddContact tempale={empty} options={this.state.tags}/>
+                            <AddContact tempale={this.state.tempale} options={this.state.tags}/>
                         ) : 
                         this.state.emptyDataShow ? 
                         (
