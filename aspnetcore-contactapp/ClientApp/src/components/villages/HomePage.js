@@ -44,6 +44,9 @@ class HomePage extends React.Component {
     componentDidMount() {
         setTimeout(() => {
             this.GetDataFromRepository()
+            $(".list").animate({
+                scrollTop : "0" 
+            }, 1500);
         }, 1500)
     }
 
@@ -177,19 +180,16 @@ class HomePage extends React.Component {
      */
    
     scrollTo = (str)=>{
-        console.log(str , currentScroll)
-        // this.current = this.current === "" ? "A" : this.current
-        var current = $(`#${currentScroll}`)
+        var a = $(`#A`)
         var target = $(`#${str}`)
-        if(current == target) return
-        if(target.length || currentScroll.length){
+        
+        if(target.length){
             try{
-                var x = target.offset().top
-                console.log(x)
+                var t_a = target.offset().top - a.offset().top
+                console.log(t_a)
                 $(".list").animate({
-                    scrollTop : x 
+                    scrollTop : t_a
                 }, 1500);
-                currentScroll = str
             }catch(E){
                 console.log(E)
             }

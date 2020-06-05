@@ -12,11 +12,8 @@ class ContactItems extends React.Component {
                     <div>
                     {
                         l.indexOf(i.firstName.charAt(0)) < 0 ?
-                    <div id={i.firstName.charAt(0)}>{l.push(i.firstName.charAt(0)) > 0 ? i.firstName.charAt(0) : ""}</div>
-                        :
-                        <div></div>
-                    }
-                    <ContactCard 
+                        <div id={i.firstName.charAt(0)}>{l.push(i.firstName.charAt(0)) > 0 ? i.firstName.charAt(0) : ""}
+                        <ContactCard 
                         name = {`${i.firstName} ${i.lastName}`}
                         label = {i.label}
                         avatar = {i.avatar}
@@ -24,6 +21,18 @@ class ContactItems extends React.Component {
                         conatctID ={i.conatctID}
                         changeCurrent = {this.props.changeCurrent}
                    />
+                        </div>
+                        :
+                        <ContactCard 
+                        name = {`${i.firstName} ${i.lastName}`}
+                        label = {i.label}
+                        avatar = {i.avatar}
+                        key={i.conatctID}
+                        conatctID ={i.conatctID}
+                        changeCurrent = {this.props.changeCurrent}
+                    />
+                    }
+                    
                     </div>
                 )
             })}
