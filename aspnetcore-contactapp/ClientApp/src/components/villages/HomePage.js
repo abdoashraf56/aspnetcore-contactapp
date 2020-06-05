@@ -57,6 +57,33 @@ class HomePage extends React.Component {
     }
 
     /**
+    * Add new Contact or Edit one
+    * @param {Object} contact the new or updated contact
+    */
+    AddorEditContact = (contact) => {
+        var updatedData = this.state.data
+        //find the index of new contact if it exist
+        var index = updatedData.findIndex( a => a.conatctID === contact.conatctID)
+        if(index > -1){
+            //Replace the old with the new contact
+            updatedData[index] = contact
+            
+            //Update
+       
+            this.setState((prevState) => {
+                this.ToogleInputPage()
+                return {filterdata : updatedData, data : updatedData , current : contact}
+            })
+        }else{
+            //Create new one
+            this.setState((prevState) => {
+                updatedData.push(contact)
+                return {filterdata : updatedData, data : updatedData , current : contact}
+            })
+        }
+    }
+
+    /**
      * Change the current selected contact to selected one
      * @param {String} key id of the selected contact
      */
@@ -112,7 +139,6 @@ class HomePage extends React.Component {
         //Update the current contact with replacement contact
         current = newdata[index > -1 ? index : 0]
         
-        newdata = newdata.slice(0,2)
 
         if(current === undefined){
             this.setState((prevState) => {
@@ -143,7 +169,11 @@ class HomePage extends React.Component {
                     {
                         this.state.showInsert ? 
                         (
-                            <AddContact tempale={this.state.tempale} options={this.state.tags}/>
+                            <AddContact 
+                            tempale={this.state.tempale} 
+                            options={this.state.tags}
+                            AddorEditContact={this.AddorEditContact}
+                            />
                         ) : 
                         this.state.emptyDataShow ? 
                         (

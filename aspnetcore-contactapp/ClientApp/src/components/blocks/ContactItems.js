@@ -10,7 +10,7 @@ class ContactItems extends React.Component {
                 return (
                    <ContactCard 
                         name = {`${i.firstName} ${i.lastName}`}
-                        lable = {i.lable}
+                        label = {i.label}
                         avatar = {i.avatar}
                         key={i.conatctID}
                         conatctID ={i.conatctID}
