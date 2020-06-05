@@ -9,6 +9,7 @@ class ContactList extends React.Component {
             <div className="contact-list">
                <SearchFilterBar 
                 handle={this.props.handle} 
+                deleteall = {this.props.deleteall}
                 tags={this.props.tags}
                 switchInptpage = {this.props.switchInptpage}
                 />

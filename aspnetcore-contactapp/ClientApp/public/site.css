@@ -257,6 +257,12 @@ body {
     mask-size: cover;
 }
 
+.icon-close {
+    mask: url("../images/icons/close-icon.svg");
+    background: black;
+    mask-size: cover;
+}
+
 .icon-search {
     mask: url("../images/icons/search-icon.svg");
     background: black;

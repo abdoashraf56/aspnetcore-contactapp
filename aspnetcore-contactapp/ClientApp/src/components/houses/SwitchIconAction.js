@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from './Icon'
 
-class IconAction extends React.Component {
+class SwitchIconAction extends React.Component {
     switch = ()=>{
         this.props.switchInptpage()
     }
@@ -14,4 +14,4 @@ class IconAction extends React.Component {
     }
 }
 
-export default IconAction
+export default SwitchIconAction

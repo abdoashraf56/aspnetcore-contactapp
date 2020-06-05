@@ -4,6 +4,8 @@ import SelectFormGroup from '../houses/SelectFormGroup'
 import FileFormGroup from '../houses/FileFormGroup'
 import $ from 'jquery'
 import {ReadImage} from '../../Controllers/HomePagController'
+import Icon from '../houses/Icon'
+import SwitchIconAction from '../houses/SwitchIconAction'
 
 var EmptyContact = {
     firstName: "",
@@ -43,17 +45,20 @@ class AddContact extends React.Component {
             }
         })
         x.conatctID = this.props.tempale.conatctID ? this.props.tempale.conatctID : 25
-        console.log(x)
+        //Make a delay to give react time to relax
         setTimeout(()=>{
             this.props.AddorEditContact(x)
         } , 200)
-        
     }
 
 
     render() {
         return (
             <div class="input-page">
+                <SwitchIconAction 
+                    IconType="icon-close" 
+                    switchInptpage = {this.props.switchInptpage}
+                />
                 <form onSubmit={this.AddorEditContact} action="#" method="POST" enctype="multipart/form-data">
 
 

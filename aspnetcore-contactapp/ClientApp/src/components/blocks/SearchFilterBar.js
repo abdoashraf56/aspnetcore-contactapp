@@ -2,7 +2,8 @@ import React from 'react'
 import SearchInput from '../houses/SearchInput'
 
 import TagIconDropdown from '../houses/TagIconDropdown'
-import IconAction from '../houses/IconAction'
+import SwitchIconAction from '../houses/SwitchIconAction'
+import DotsIconDropdown from '../houses/DotsIconDropdown'
 
 class SearchFilterBar extends React.Component {
     render() {
@@ -10,7 +11,7 @@ class SearchFilterBar extends React.Component {
             <div className="search-filter">
             <SearchInput handle={this.props.handle}/>
 
-               <IconAction 
+               <SwitchIconAction 
                     IconType="icon-plus" 
                     switchInptpage = {this.props.switchInptpage}
                 />
@@ -18,7 +19,7 @@ class SearchFilterBar extends React.Component {
                 {/* <!-- Tag Icon --> */}
                 <TagIconDropdown handle={this.props.handle}  tags={this.props.tags}/>
 
-                <IconAction IconType="icon-dots" switchInptpage={()=>{}}/>
+                <DotsIconDropdown deleteall={this.props.deleteall}/>
             </div>
         )
     }
