@@ -3,7 +3,7 @@ import Data from '../../src/Data.json'
 export function GetContactData(){
     // const response = await fetch('api/contact')
     // const data = await response.json();
-    return Data
+    return Data.sort((a , b) => a.firstName > b.firstName)
 }
 
 export function GetTagData(){

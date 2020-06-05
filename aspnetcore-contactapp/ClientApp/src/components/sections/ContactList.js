@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchFilterBar from '../blocks/SearchFilterBar'
 import ContactItems from '../blocks/ContactItems'
+import AlpahList from '../blocks/AlphaList'
 
 class ContactList extends React.Component {
 
@@ -13,11 +14,14 @@ class ContactList extends React.Component {
                 tags={this.props.tags}
                 switchInptpage = {this.props.switchInptpage}
                 />
+                <div className="filter-list">
+                    <ContactItems 
+                        items={this.props.list}
+                        changeCurrent = {this.props.changeCurrent}
+                        />
 
-                <ContactItems 
-                    items={this.props.list}
-                    changeCurrent = {this.props.changeCurrent}
-                />
+                    <AlpahList scrollTo={this.props.scrollTo}/>
+                </div>
             </div>
         )
     }

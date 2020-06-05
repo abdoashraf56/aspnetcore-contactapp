@@ -7,6 +7,7 @@ import AddContact from '../sections/AddContact'
 import CallToAction from '../blocks/CallToAction'
 import Title from '../houses/Title'
 import Subtitle from '../houses/Subtitle'
+import $ from 'jquery'
 
 var empty = {
     firstName: "",
@@ -29,6 +30,8 @@ var orginalState = {
     current: {},
 
 }
+
+var currentScroll = "A"
 
 class HomePage extends React.Component {
     state = {
@@ -168,6 +171,31 @@ class HomePage extends React.Component {
         })
     }
 
+    /**
+     * Scroll to spacific list
+     * @param {String} str target section
+     */
+   
+    scrollTo = (str)=>{
+        console.log(str , currentScroll)
+        // this.current = this.current === "" ? "A" : this.current
+        var current = $(`#${currentScroll}`)
+        var target = $(`#${str}`)
+        if(current == target) return
+        if(target.length || currentScroll.length){
+            try{
+                var x = target.offset().top
+                console.log(x)
+                $(".list").animate({
+                    scrollTop : x 
+                }, 1500);
+                currentScroll = str
+            }catch(E){
+                console.log(E)
+            }
+        }
+    }
+
     render() {
         return (
             <section>
@@ -176,6 +204,7 @@ class HomePage extends React.Component {
                     :
                     <div className="home-page">
                         <ContactList
+                            scrollTo={this.scrollTo}
                             deleteall={this.DeleteAll}
                             list={this.state.filterdata}
                             handle={this.filterData}

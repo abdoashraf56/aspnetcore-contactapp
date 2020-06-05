@@ -4,11 +4,19 @@ import ContactCard from '../houses/ContactCard'
 
 class ContactItems extends React.Component {
      render() {
+        var l = []
         return (
-            <div className="list">
+            <div className="list" >
             {this.props.items.map((i , k) => {
                 return (
-                   <ContactCard 
+                    <div>
+                    {
+                        l.indexOf(i.firstName.charAt(0)) < 0 ?
+                    <div id={i.firstName.charAt(0)}>{l.push(i.firstName.charAt(0)) > 0 ? i.firstName.charAt(0) : ""}</div>
+                        :
+                        <div></div>
+                    }
+                    <ContactCard 
                         name = {`${i.firstName} ${i.lastName}`}
                         label = {i.label}
                         avatar = {i.avatar}
@@ -16,6 +24,7 @@ class ContactItems extends React.Component {
                         conatctID ={i.conatctID}
                         changeCurrent = {this.props.changeCurrent}
                    />
+                    </div>
                 )
             })}
                 

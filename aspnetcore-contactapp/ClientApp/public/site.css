@@ -49,7 +49,6 @@ body {
 
 
 .navigation{
-    padding-bottom: 1rem;
     margin-bottom: 1rem;
     display: flex;
     flex-wrap: wrap;
@@ -207,9 +206,34 @@ body {
     font-family: var(--paraghraph-text);
 }
 
+.filter-list{
+    display: flex;
+    width: 100%;
+}
+
+.alpha-list{
+    flex: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.alpha-btn{
+    background-color: gray;
+    border: none;
+    width: 100%;
+    height: auto;
+    font-size: x-small;
+    margin-bottom: .25rem;
+}
+
 .list{
-    height: 400px;
-    overflow: scroll;
+    flex: 90%;
+    padding: 1rem;
+    height: 600px;
+    background: white;
+    overflow: auto;
+    scroll-behavior: smooth;
 }
 
 .search-filter{
