@@ -44,7 +44,7 @@ class AddContact extends React.Component {
                 }
             }
         })
-        x.conatctID = this.props.tempale.conatctID ? this.props.tempale.conatctID : 25
+        x.conatctID = this.props.tempale.conatctID ? this.props.tempale.conatctID : Math.random() * 100
         //Make a delay to give react time to relax
         setTimeout(()=>{
             this.props.AddorEditContact(x)

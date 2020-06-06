@@ -1,6 +1,6 @@
 import React from 'react'
 import female_avatar from '../../images/female_avatar.svg'
-import avatar from '../../images/avatar-profile.svg'
+import profile from '../../images/male_avatar.svg'
 
 class ContactDetails extends React.Component {
     EditContact = ()=>{
@@ -38,7 +38,7 @@ class ContactDetails extends React.Component {
                     </div>
 
                     <div className="details-avatar">
-                        <img className="card-avatar-img-details" src={`data:image/png;base64,${avatar}`} alt="avatr" srcset="" />
+                        <img className="card-avatar-img-details" src={avatar ? `data:image/png;base64,${avatar}` : profile} alt="avatr" srcset="" />
                     </div>
                     <div className="details-details">
                         <div className="card-title">{`${firstName} ${lastName}`}</div>

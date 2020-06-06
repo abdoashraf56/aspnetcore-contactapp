@@ -101,7 +101,9 @@ class HomePage extends React.Component {
                 updatedData.push(contact)
                 
                 this.ToogleInputPage()
-                return { filterdata: updatedData, data: updatedData, current: contact }
+                var state = { filterdata: updatedData, data: updatedData, current: contact }
+                if(prevState.emptyDataShow) state.emptyDataShow = false
+                return state
             })
         }
     }
@@ -171,7 +173,9 @@ class HomePage extends React.Component {
      */
     DeleteAll = () => {
         this.setState((prevState) => {
-            return orginalState
+            var orginial =  {...orginalState , emptyDataShow: true}
+            orginial.tags = prevState.tags
+            return orginial
         })
     }
 
