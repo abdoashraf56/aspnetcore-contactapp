@@ -99,6 +99,7 @@ class HomePage extends React.Component {
             //Create new one
             this.setState((prevState) => {
                 updatedData.push(contact)
+                
                 this.ToogleInputPage()
                 return { filterdata: updatedData, data: updatedData, current: contact }
             })
@@ -175,7 +176,7 @@ class HomePage extends React.Component {
     }
 
     /**
-     * Scroll to spacific list
+     * Scroll to spacific contacy in the contacts list
      * @param {String} str target section
      */
    

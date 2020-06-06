@@ -5,9 +5,11 @@ import ContactCard from '../houses/ContactCard'
 class ContactItems extends React.Component {
      render() {
         var l = []
+        var {items} = this.props
+        items = items.sort((a,b) => a.firstName > b.firstName)
         return (
-            <div className="list" >
-            {this.props.items.map((i , k) => {
+            <div id="list" className="list" >
+            {items.map((i , k) => {
                 return (
                     <div>
                     {
