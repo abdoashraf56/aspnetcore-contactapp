@@ -28,7 +28,7 @@ export default class App extends Component {
       <div>
         <Navbar links={["about", "Pro version"]}/>
         <Route exact path='/' component={LandingPage} />
-        <Route  path='/home' component={HomePage} />
+        <AuthorizeRoute path='/home' component={HomePage} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </div>
     );
