@@ -42,7 +42,7 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => {
+        setTimeout(async () => {
             this.GetDataFromRepository()
             $(".list").animate({
                 scrollTop : "0" 
@@ -54,8 +54,9 @@ class HomePage extends React.Component {
      * Fetch data from the repository
      * And Change the State 
      */
-    GetDataFromRepository() {
-        const { data, tags } = getData()
+    async GetDataFromRepository() {
+        const { data, tags } = await getData()
+        console.log(data)
         this.setState((prevState) => {
             return {
                 data: data,

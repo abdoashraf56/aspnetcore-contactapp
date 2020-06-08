@@ -1,9 +1,14 @@
 import Data from '../../src/Data.json'
+import authService from '../components/api-authorization/AuthorizeService'
 
-export function GetContactData(){
+export async function GetContactData(){
     // const response = await fetch('api/contact')
     // const data = await response.json();
-    return Data
+    const token = await authService.getAccessToken();
+    const response = await fetch('api/contact', {
+      headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+    });
+    return await response.json();
 }
 
 export function GetTagData(){
