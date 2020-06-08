@@ -5,6 +5,7 @@ import NavLinks from '../blocks/NavLinks'
 
 
 
+
 class Navbar extends React.Component {
     state = {links : this.props.links}
    
@@ -14,6 +15,7 @@ class Navbar extends React.Component {
                 <Brand />
                 <HampurgerImg />
                 <NavLinks links={this.state.links}/>
+
             </div>
         )
     }

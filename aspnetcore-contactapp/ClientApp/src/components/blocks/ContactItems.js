@@ -14,7 +14,7 @@ class ContactItems extends React.Component {
                     <div>
                     {
                         l.indexOf(i.firstName.charAt(0)) < 0 ?
-                        <div id={i.firstName.charAt(0)}>{l.push(i.firstName.charAt(0)) > 0 ? i.firstName.charAt(0) : ""}
+                        <div key={i.firstName.charAt(0)} id={i.firstName.charAt(0)}>{l.push(i.firstName.charAt(0)) > 0 ? i.firstName.charAt(0) : ""}
                         <ContactCard 
                         name = {`${i.firstName} ${i.lastName}`}
                         label = {i.label}

@@ -191,7 +191,6 @@ class HomePage extends React.Component {
         if(target.length){
             try{
                 var t_a = target.offset().top - a.offset().top
-                console.log(t_a)
                 $(".list").animate({
                     scrollTop : t_a
                 }, 1500);
