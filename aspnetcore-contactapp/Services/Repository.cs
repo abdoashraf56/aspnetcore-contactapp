@@ -20,6 +20,10 @@ namespace aspnetcore_contactapp.Services
             _context = context;
         }
 
+        public ApplicationDbContext GetContext(){
+            return _context ;
+        }
+
         public async Task<List<T>> Get()
         {
             return await _context.Set<T>().ToListAsync();
@@ -53,7 +57,7 @@ namespace aspnetcore_contactapp.Services
         {
             var row = await _context.Set<T>().FindAsync(id);
             if (row == null) return false;
-            _context.Entry(t).State = EntityState.Modified;
+            _context.Entry(row).CurrentValues.SetValues(t);
             return await _context.SaveChangesAsync() == 1;
         }
 

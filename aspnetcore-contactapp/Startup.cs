@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using aspnetcore_contactapp.Services;
+using Microsoft.AspNetCore.Cors;
+
 
 namespace aspnetcore_contactapp
 {
@@ -40,14 +42,24 @@ namespace aspnetcore_contactapp
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddScoped<IRepository<Contact> , ContactRepository>();
-            
-            services.AddScoped<IRepository<Tag> , TagRepository>();
+            services.AddScoped<IRepository<Contact>, ContactRepository>();
+
+            services.AddScoped<IRepository<Tag>, TagRepository>();
+
+            // services.AddCors(options =>
+            //     {
+            //         options.AddPolicy("CorsPolicy",
+            //             builder => builder.AllowAnyOrigin()
+            //             .AllowAnyMethod()
+            //             .AllowAnyHeader());
+           
+            //     });
+
 
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            // In production, the React files will be served from this directory
+            //In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
@@ -72,12 +84,15 @@ namespace aspnetcore_contactapp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            // app.UseCors("CorsPolicy");
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

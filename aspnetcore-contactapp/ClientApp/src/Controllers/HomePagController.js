@@ -6,7 +6,7 @@ import { GetContactData, GetTagData } from '../Repository/Repository'
  */
 export async function getData() {
     const data = await GetContactData()
-    const tags = GetTagData()
+    const tags = await GetTagData()
     return { data, tags }
 }
 

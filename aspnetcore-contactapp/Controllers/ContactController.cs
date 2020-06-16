@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -9,27 +10,33 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 
 namespace aspnetcore_contactapp.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class ContactController : ControllerBase
     {
-        private IRepository<Contact> _repository;
+        private ContactRepository _ContactRepository;
+        private TagRepository _TagRepository;
 
-        public ContactController(IRepository<Contact> repository)
+        public ContactController(
+            IRepository<Contact> ContactRepository ,
+            IRepository<Tag> TagRepository
+            )
         {
-            _repository = repository;
+            _ContactRepository = (ContactRepository)ContactRepository;
+            _TagRepository = (TagRepository) TagRepository;
         }
 
         // GET: api/Contact
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Contact>>> GetContacts()
+        public async Task<ActionResult<IEnumerable<ContactViewModel>>> GetContacts()
         {
-            // await AddDataLocalyFromJSON();
-
-            return await _repository.Get();
+            var contatcs = await _ContactRepository.Get();
+            
+            return  await _ContactRepository.GetRelationData();
         }
 
         // private async Task AddDataLocalyFromJSON()
@@ -69,7 +76,7 @@ namespace aspnetcore_contactapp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Contact>> GetContact(Guid id)
         {
-            var contact = await _repository.GetbyId(id);
+            var contact = await _ContactRepository.GetbyId(id);
 
             if (contact == null)
             {
@@ -83,7 +90,12 @@ namespace aspnetcore_contactapp.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutContact(Guid id, Contact contact)
+        public async Task<IActionResult> PutContact(
+            Guid id,
+         [FromForm,Bind("ConatctID" , "FirstName","LastName",
+            "PhoneNumber","Email",
+            "Label","TwitterAccount",
+            "FacebookAccount","Website,Tag")]Contact contact)
         {
             if (id != contact.ConatctID)
             {
@@ -94,7 +106,7 @@ namespace aspnetcore_contactapp.Controllers
 
             try
             {
-                await _repository.Put(id , contact);
+                await _ContactRepository.Put(id , contact);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -115,19 +127,50 @@ namespace aspnetcore_contactapp.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Contact>> PostContact(Contact contact)
-        {
-            contact.ConatctID = Guid.NewGuid();
-            await _repository.Add(contact);
-
-            return CreatedAtAction("GetContact", new { id = contact.ConatctID }, contact);
+        public async Task<ActionResult<ContactViewModel>> PostContact(
+            [FromBody,Bind("ConatctID","FirstName","LastName",
+            "PhoneNumber","Email","Avatar",
+            "Label","TwitterAccount",
+            "FacebookAccount","Website", "Tag")]ContactViewModel contactViewModel ,
+            IFormFile Avatar = null)
+        {   
+            if(ModelState.IsValid){
+                //Convert the json to domain object
+                Contact contact = contactViewModel.ToDomainObject();
+                
+                
+                //Check if there is avatar uploaded and read it
+                // if(Avatar != null){
+                //     contact.Avatar = new byte[Avatar.Length];
+                //     Stream stream = Avatar.OpenReadStream();
+                //     using(stream){
+                //         await stream.ReadAsync(contact.Avatar);
+                //     }
+                // }
+                
+                //Get the relative tagId for the tag 
+                contact.TagID = await _TagRepository.GetGuid(contactViewModel.Tag);
+                
+                //Check if ContatcID exist if exit so update it if not create new one
+                if(await _ContactRepository.Exits(contact.ConatctID)){
+                    if(!await _ContactRepository.Put(contact.ConatctID , contact)){
+                        return null;
+                    }
+                }else{
+                    contact.ConatctID = Guid.NewGuid();
+                    await _ContactRepository.Add(contact);
+                }
+                return await _ContactRepository.GetRelationDataByID(contact.ConatctID);
+            }else{
+                return null;
+            }
         }
 
         // DELETE: api/Contact/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Contact>> DeleteContact(Guid id)
         {
-            var contact = await _repository.Delete(id);
+            var contact = await _ContactRepository.Delete(id);
             if (contact == null)
             {
                 return NotFound();
@@ -137,7 +180,7 @@ namespace aspnetcore_contactapp.Controllers
 
         private async Task<bool> ContactExistsAsync(Guid id)
         {
-            return   await _repository.Exits(id);
+            return   await _ContactRepository.Exits(id);
         }
     }
 }

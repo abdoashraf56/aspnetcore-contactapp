@@ -24,7 +24,7 @@ class TagIconDropdown extends React.Component {
                 
                 {
                     this.props.tags.map((i,k) => {
-                        return <a onClick={this.handle} className="dropdown-item" key={i.id}>{i.tag}</a>
+                        return <a onClick={this.handle} className="dropdown-item" key={i.tagID}>{i.name}</a>
                     })
                 }
                 <div className="dropdown-divider"></div>

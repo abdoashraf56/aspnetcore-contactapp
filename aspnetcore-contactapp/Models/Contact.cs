@@ -41,6 +41,7 @@ namespace aspnetcore_contactapp.Models
         public Guid?  TagID { get; set; }
         
         public virtual Tag Tag { get; set; }
-    
+
+
     }
 }

@@ -1,25 +1,27 @@
 import React from 'react'
 import ContactList from '../sections/ContactList'
 import Spinner from '../houses/Spinner'
-import { getData } from '../../Controllers/HomePagController'
+import { getData , ReadImage } from '../../Controllers/HomePagController'
 import ContactDetails from '../sections/ContactDetails'
 import AddContact from '../sections/AddContact'
-import CallToAction from '../blocks/CallToAction'
+
 import Title from '../houses/Title'
 import Subtitle from '../houses/Subtitle'
 import $ from 'jquery'
+import authService from './../api-authorization/AuthorizeService'
 
 var empty = {
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    email: "",
-    avatar: "",
-    twitterAccount: "",
-    facebookAccount: "",
-    website: "",
-    label: "",
-    tag: ""
+    ConatctID: "88a6c7cf-55d9-416e-97b6-b48b88dbe5a3",
+    FirstName: "",
+    LastName: "",
+    PhoneNumber: "",
+    Email: "",
+    Avatar: "",
+    TwitterAccount: "",
+    FacebookAccount: "",
+    Website: "",
+    Label: "",
+    Tag: ""
 }
 
 var orginalState = {
@@ -35,7 +37,7 @@ var currentScroll = "A"
 
 class HomePage extends React.Component {
     state = {
-        ...orginalState, 
+        ...orginalState,
         loading: true,
         showInsert: false,
         emptyDataShow: false
@@ -43,9 +45,9 @@ class HomePage extends React.Component {
 
     componentDidMount() {
         setTimeout(async () => {
-            this.GetDataFromRepository()
+            await this.GetDataFromRepository()
             $(".list").animate({
-                scrollTop : "0" 
+                scrollTop: "0"
             }, 1500);
         }, 1500)
     }
@@ -56,7 +58,6 @@ class HomePage extends React.Component {
      */
     async GetDataFromRepository() {
         const { data, tags } = await getData()
-        console.log(data)
         this.setState((prevState) => {
             return {
                 data: data,
@@ -77,36 +78,77 @@ class HomePage extends React.Component {
         })
     }
 
+    /** 
+     * Toggle the input page
+    */
+    ToogleInputPageAndChangCurrent = (updatedData , contact) => {
+        this.setState((prevState) => {
+            var state = { filterdata: updatedData, data: updatedData, current: contact , showInsert: !prevState.showInsert, tempale: empty }
+                        if (prevState.emptyDataShow) state.emptyDataShow = false
+                        return state
+        })
+    }
+
 
     /**
      * Add new Contact or Edit one
-    * @param {Object} contact the new or updated contact
+    * 
     */
-    AddorEditContact = (contact) => {
-        var updatedData = this.state.data
-        //find the index of new contact if it exist
-        var index = updatedData.findIndex(a => a.conatctID === contact.conatctID)
-        if (index > -1) {
-            //Replace the old with the new contact
-            updatedData[index] = contact
+    AddorEditContact = async () => {
+        //Get from and convert it to FormData
+        var form = document.getElementById("form")
 
-            //Update
+        var formData = new FormData(form)
 
-            this.setState((prevState) => {
-                this.ToogleInputPage()
-                return { filterdata: updatedData, data: updatedData, current: contact }
-            })
-        } else {
-            //Create new one
-            this.setState((prevState) => {
-                updatedData.push(contact)
-                
-                this.ToogleInputPage()
-                var state = { filterdata: updatedData, data: updatedData, current: contact }
-                if(prevState.emptyDataShow) state.emptyDataShow = false
-                return state
-            })
+        //Convert forData to json to send it
+        var requestBody = {
         }
+        for (var [key, value] of formData.entries()) {
+            requestBody[key] = value
+        }
+        if (requestBody.Avatar != "") {
+            var data  = await ReadImage(requestBody.Avatar)
+            requestBody.Avatar = data.split("base64,")[1]
+        }else{
+            if(requestBody.ConatctID !== "88a6c7cf-55d9-416e-97b6-b48b88dbe5a3"){
+                requestBody.Avatar = this.state.current.avatar
+            }
+        }
+        //Send Post Request
+        fetch("https://localhost:5001/api/contact", {
+            method: "POST",
+            // mode: "cors",
+            headers: {
+                "Content-Type" : "application/json; charset=utf-8",
+                // "Access-Control-Allow-Origin": "*"
+            },
+            body: JSON.stringify(requestBody)
+        }).then(response =>{
+            return  response.json()
+        }).then(contact => {
+            if (contact != null) {
+                var updatedData = this.state.data
+                //find the index of new contact if it exist
+                var index = updatedData.findIndex(a => a.conatctID === contact.conatctID)
+                if (index > -1) {
+                    //Replace the old with the new contact
+                    updatedData[index] = contact
+            
+                    //Update
+                    this.setState((prevState) => {
+                        this.ToogleInputPage()
+                        return { filterdata: updatedData, data: updatedData, current: contact }
+                    })
+                } else {
+                    //Create new one
+                    updatedData.push(contact)
+                    this.ToogleInputPageAndChangCurrent(updatedData , contact)
+                }
+            }
+        }).catch(e => {
+            console.log(e)
+        })
+
     }
 
     /**
@@ -149,23 +191,27 @@ class HomePage extends React.Component {
         //Getting the current and index selected contact
         var current = this.state.current
         var index = this.state.data.indexOf(current) - 1
+        fetch('api/contact/' + current.conatctID, {
+            method: 'DELETE',
+        }).then(res => {
 
-        //Delete the selectde contact by filter out the data 
-        var newdata = this.state.data.filter(a => a !== current)
+            //Delete the selectde contact by filter out the data 
+            var newdata = this.state.data.filter(a => a !== current)
 
-        //Update the current contact with replacement contact
-        current = newdata[index > -1 ? index : 0]
+            //Update the current contact with replacement contact
+            current = newdata[index > -1 ? index : 0]
 
 
-        if (current === undefined) {
+            if (current === undefined) {
+                this.setState((prevState) => {
+                    return { filterdata: newdata, data: newdata, emptyDataShow: true }
+                })
+
+            }
+
             this.setState((prevState) => {
-                return { filterdata: newdata, data: newdata, emptyDataShow: true }
+                return { filterdata: newdata, data: newdata, current: current }
             })
-
-        }
-
-        this.setState((prevState) => {
-            return { filterdata: newdata, data: newdata, current: current }
         })
     }
 
@@ -174,7 +220,7 @@ class HomePage extends React.Component {
      */
     DeleteAll = () => {
         this.setState((prevState) => {
-            var orginial =  {...orginalState , emptyDataShow: true}
+            var orginial = { ...orginalState, emptyDataShow: true }
             orginial.tags = prevState.tags
             return orginial
         })
@@ -184,18 +230,18 @@ class HomePage extends React.Component {
      * Scroll to spacific contacy in the contacts list
      * @param {String} str target section
      */
-   
-    scrollTo = (str)=>{
+
+    scrollTo = (str) => {
         var a = $(`#A`)
         var target = $(`#${str}`)
-        
-        if(target.length){
-            try{
+
+        if (target.length) {
+            try {
                 var t_a = target.offset().top - a.offset().top
                 $(".list").animate({
-                    scrollTop : t_a
+                    scrollTop: t_a
                 }, 1500);
-            }catch(E){
+            } catch (E) {
                 console.log(E)
             }
         }
@@ -257,3 +303,4 @@ class HomePage extends React.Component {
 }
 
 export default HomePage
+
