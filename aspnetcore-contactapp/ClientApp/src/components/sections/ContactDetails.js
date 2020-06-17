@@ -59,7 +59,7 @@ class ContactDetails extends React.Component {
                         </div>
                         <div className="col-50">
                             <div className="icon-noaction icon-web"></div>
-                            <a className="details-item" href={website} target="_blank" rel="noopener noreferrer">{website}</a>
+                            <a className="details-item" href={`https://${website}`} target="_blank" rel="noopener noreferrer">{website}</a>
                         </div>
                         <div className="col-50">
                             <div className="icon-noaction icon-facebook"></div>

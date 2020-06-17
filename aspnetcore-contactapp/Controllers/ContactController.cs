@@ -34,7 +34,7 @@ namespace aspnetcore_contactapp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContactViewModel>>> GetContacts()
         {
-            var contatcs = await _ContactRepository.Get();
+            //var contatcs = await _ContactRepository.Get();
             
             return  await _ContactRepository.GetRelationData();
         }
