@@ -10,18 +10,19 @@ import Subtitle from '../houses/Subtitle'
 import $ from 'jquery'
 import authService from './../api-authorization/AuthorizeService'
 
+//this is the temple object of json reponse
 var empty = {
-    ConatctID: "88a6c7cf-55d9-416e-97b6-b48b88dbe5a3",
-    FirstName: "",
-    LastName: "",
-    PhoneNumber: "",
-    Email: "",
-    Avatar: "",
-    TwitterAccount: "",
-    FacebookAccount: "",
-    Website: "",
-    Label: "",
-    Tag: ""
+    conatctID: "88a6c7cf-55d9-416e-97b6-b48b88dbe5a3",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    avatar: "",
+    twitterAccount: "",
+    facebookAccount: "",
+    website: "",
+    label: "",
+    tag: ""
 }
 
 var orginalState = {
@@ -30,7 +31,6 @@ var orginalState = {
     filterdata: [],
     tags: [],
     current: {},
-
 }
 
 var currentScroll = "A"
@@ -79,7 +79,9 @@ class HomePage extends React.Component {
     }
 
     /** 
-     * Toggle the input page
+     * Toggle the input page and chnage current selected
+     * @param {List} updatedData it is update version of data
+     * @param {Object} contact it is what will replace current selected
     */
     ToogleInputPageAndChangCurrent = (updatedData , contact) => {
         this.setState((prevState) => {
@@ -100,18 +102,26 @@ class HomePage extends React.Component {
 
         var formData = new FormData(form)
 
-        //Convert forData to json to send it
+        //Convert formData to json to send it
         var requestBody = {
         }
         for (var [key, value] of formData.entries()) {
             requestBody[key] = value
         }
-        if (requestBody.Avatar != "") {
-            var data  = await ReadImage(requestBody.Avatar)
-            requestBody.Avatar = data.split("base64,")[1]
+
+        //Check if their is avatar image upload 
+        if (requestBody.avatar != "") {
+            //Read the avatar image file and get byte[] of it
+            var data  = await ReadImage(requestBody.avatar)
+            requestBody.avatar = data.split("base64,")[1]
         }else{
-            if(requestBody.ConatctID !== "88a6c7cf-55d9-416e-97b6-b48b88dbe5a3"){
-                requestBody.Avatar = this.state.current.avatar
+            /*
+            * Check if is not a new contact by compare the conatctID with the default one
+            * and not update its avatar 
+            * so keep the current avatar the same
+            */
+            if(requestBody.conatctID !== "88a6c7cf-55d9-416e-97b6-b48b88dbe5a3"){
+                requestBody.avatar = this.state.current.avatar
             }
         }
         //Send Post Request
@@ -140,7 +150,7 @@ class HomePage extends React.Component {
                         return { filterdata: updatedData, data: updatedData, current: contact }
                     })
                 } else {
-                    //Create new one
+                    //Push the new contact to the data
                     updatedData.push(contact)
                     this.ToogleInputPageAndChangCurrent(updatedData , contact)
                 }
@@ -157,6 +167,7 @@ class HomePage extends React.Component {
      */
     changeCurrent = (key) => {
         this.setState((prevState) => {
+            //Filter data by conatctID to match key
             var SelectedContact = prevState.data.filter(a => a.conatctID === key)[0]
             return { current: SelectedContact }
         })
@@ -230,13 +241,13 @@ class HomePage extends React.Component {
      * Scroll to spacific contacy in the contacts list
      * @param {String} str target section
      */
-
     scrollTo = (str) => {
-        var a = $(`#A`)
+        var a = $(`#list-head`)
         var target = $(`#${str}`)
 
         if (target.length) {
             try {
+                //Callculate the distance between the target and the head of list
                 var t_a = target.offset().top - a.offset().top
                 $(".list").animate({
                     scrollTop: t_a
@@ -250,7 +261,6 @@ class HomePage extends React.Component {
     render() {
         return (
             <section>
-
                 {this.state.loading ? <div className="spin-container"><Spinner /></div>
                     :
                     <div className="home-page">
@@ -292,11 +302,6 @@ class HomePage extends React.Component {
                         }
                     </div>
                 }
-
-
-                {/* <!-- Details Page--> */}
-
-
             </section >
         )
     }

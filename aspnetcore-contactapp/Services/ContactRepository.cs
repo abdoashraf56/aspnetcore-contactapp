@@ -15,41 +15,49 @@ namespace aspnetcore_contactapp.Services
         {
         }
 
+        ///<summary>
+        /// Make A join query to get info of tag for all data
+        ///</summary>
         public async Task<List<ContactViewModel>> GetRelationData(){
             var context = GetContext();
             
             var data = await context.Contacts.Include(a => a.Tag).Select(a => new ContactViewModel{
-                Avatar = a.Avatar , 
-                ConatctID = a.ConatctID ,
-                Email = a.Email ,
-                FirstName = a.FirstName ,
-                LastName = a.LastName ,
-                Tag = a.Tag.Name , 
-                Label = a.Label ,
-                FacebookAccount = a.FacebookAccount ,
-                PhoneNumber = a.PhoneNumber ,
-                TwitterAccount = a.TwitterAccount ,
-                Website = a.Website
+                avatar = a.Avatar , 
+                conatctID = a.ConatctID ,
+                email = a.Email ,
+                firstName = a.FirstName ,
+                lastName = a.LastName ,
+                tag = a.Tag.Name , 
+                label = a.Label ,
+                facebookAccount = a.FacebookAccount ,
+                phoneNumber = a.PhoneNumber ,
+                twitterAccount = a.TwitterAccount ,
+                website = a.Website
             }).ToListAsync();
             return data;
         } 
 
+
+        ///<summary>
+        /// Make A join query to get info of tag for a spacific contact
+        ///</summary>
+        ///<param name="id"></param>
         public async Task<ContactViewModel> GetRelationDataByID(Guid id){
             var context = GetContext();
             
             var data = await context.Contacts.Where(a => a.ConatctID == id).Include(a => a.Tag).FirstOrDefaultAsync();
             return new ContactViewModel{
-                Avatar = data.Avatar , 
-                ConatctID = data.ConatctID ,
-                Email = data.Email ,
-                FirstName = data.FirstName ,
-                LastName = data.LastName ,
-                Tag = data.Tag.Name , 
-                Label = data.Label ,
-                FacebookAccount = data.FacebookAccount ,
-                PhoneNumber = data.PhoneNumber ,
-                TwitterAccount = data.TwitterAccount ,
-                Website = data.Website
+                avatar = data.Avatar , 
+                conatctID = data.ConatctID ,
+                email = data.Email ,
+                firstName = data.FirstName ,
+                lastName = data.LastName ,
+                tag = data.Tag.Name , 
+                label = data.Label ,
+                facebookAccount = data.FacebookAccount ,
+                phoneNumber = data.PhoneNumber ,
+                twitterAccount = data.TwitterAccount ,
+                website = data.Website
             };
         } 
     }

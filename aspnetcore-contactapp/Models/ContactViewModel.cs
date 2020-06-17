@@ -5,46 +5,46 @@ namespace aspnetcore_contactapp.Models
 {
     public class ContactViewModel
     {
-        public Guid ConatctID { get; set; }
+        public Guid conatctID { get; set; }
 
-        public string FirstName { get; set; }
-
-
-        public string LastName { get; set; }
+        public string firstName { get; set; }
 
 
-        public string PhoneNumber { get; set; }
+        public string lastName { get; set; }
 
 
-        public string Email { get; set; }
+        public string phoneNumber { get; set; }
 
-        public byte[] Avatar { get; set; }
 
-        public string TwitterAccount { get; set; }
+        public string email { get; set; }
 
-        public string FacebookAccount { get; set; }
+        public byte[] avatar { get; set; }
 
-        public string Website { get; set; }
+        public string twitterAccount { get; set; }
 
-        public string Label { get; set; }
+        public string facebookAccount { get; set; }
 
-        public string Tag { get; set; }
+        public string website { get; set; }
+
+        public string label { get; set; }
+
+        public string tag { get; set; }
 
         ///Convert it ton Contact as The Domain Object
         public Contact ToDomainObject()
         {
             return new Contact
             {
-                ConatctID = this.ConatctID,
-                FirstName = this.FirstName,
-                LastName = this.LastName,
-                PhoneNumber = this.PhoneNumber,
-                Avatar = this.Avatar,
-                Email = this.Email,
-                TwitterAccount = this.TwitterAccount,
-                FacebookAccount = this.FacebookAccount,
-                Website = this.Website,
-                Label = this.Label,
+                ConatctID = this.conatctID,
+                FirstName = this.firstName,
+                LastName = this.lastName,
+                PhoneNumber = this.phoneNumber,
+                Avatar = this.avatar,
+                Email = this.email,
+                TwitterAccount = this.twitterAccount,
+                FacebookAccount = this.facebookAccount,
+                Website = this.website,
+                Label = this.label,
             };
         }
     }

@@ -41,35 +41,35 @@ class AddContact extends React.Component {
 
 
                     {
-                        Object.keys(tempale).map((k, i) => {
+                        Object.keys(tempale).map((key, i) => {
 
                             //Convert the key to match the model on backend server
-                            var key = k[0].toUpperCase() +  k.slice(1)
-                            if (key === "Email") {
-                                return <InputFormGroup value={this.props.tempale[k]} title={key} type={"email"} />
+                            
+                            if (key === "email") {
+                                return <InputFormGroup value={this.props.tempale[key]} title={key} type={"email"} />
                             }
 
-                            if (key == "TagID") {
+                            if (key == "tagID") {
                                 return <div></div>
                             }
 
-                            if(key == "ConatctID"){
-                                return <input name="ConatctID" type="hidden" value={this.props.tempale[k]}></input>
+                            if(key == "conatctID"){
+                                return <input name="conatctID" type="hidden" value={this.props.tempale[key]}></input>
                             }
 
-                            if (key === "Phone") {
-                                return <InputFormGroup value={this.props.tempale[k]} title={key} type={"tel"} />
+                            if (key === "phone") {
+                                return <InputFormGroup value={this.props.tempale[key]} title={key} type={"tel"} />
                             }
 
-                            if (key == "Tag") {
-                                return <SelectFormGroup value={this.props.tempale[k]} title={key} options={this.props.options} />
+                            if (key == "tag") {
+                                return <SelectFormGroup value={this.props.tempale[key]} title={key} options={this.props.options} />
                             }
 
-                            if (key === "Avatar") {
-                                return <FileFormGroup title={"Avatar"} />
+                            if (key === "avatar") {
+                                return <FileFormGroup title={"avatar"} />
                             }
 
-                            return <InputFormGroup value={this.props.tempale[k]} title={key} type={"text"} />
+                            return <InputFormGroup value={this.props.tempale[key]} title={key} type={"text"} />
                         })
                     }
 

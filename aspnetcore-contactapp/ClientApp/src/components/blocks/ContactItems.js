@@ -12,6 +12,7 @@ class ContactItems extends React.Component {
             {items.map((i , k) => {
                 return (
                     <div>
+                        <div id="list-head"></div>
                     {
                         l.indexOf(i.firstName.charAt(0)) < 0 ?
                         <div key={i.firstName.charAt(0)} id={i.firstName.charAt(0)}>{l.push(i.firstName.charAt(0)) > 0 ? i.firstName.charAt(0) : ""}

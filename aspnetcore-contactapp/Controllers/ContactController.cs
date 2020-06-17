@@ -128,10 +128,10 @@ namespace aspnetcore_contactapp.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<ContactViewModel>> PostContact(
-            [FromBody,Bind("ConatctID","FirstName","LastName",
-            "PhoneNumber","Email","Avatar",
-            "Label","TwitterAccount",
-            "FacebookAccount","Website", "Tag")]ContactViewModel contactViewModel ,
+            [FromBody,Bind("conatctID","firstName","lastName",
+            "phoneNumber","email","avatar",
+            "label","twitterAccount",
+            "facebookAccount","website", "tag")]ContactViewModel contactViewModel ,
             IFormFile Avatar = null)
         {   
             if(ModelState.IsValid){
@@ -149,7 +149,7 @@ namespace aspnetcore_contactapp.Controllers
                 // }
                 
                 //Get the relative tagId for the tag 
-                contact.TagID = await _TagRepository.GetGuid(contactViewModel.Tag);
+                contact.TagID = await _TagRepository.GetGuid(contactViewModel.tag);
                 
                 //Check if ContatcID exist if exit so update it if not create new one
                 if(await _ContactRepository.Exits(contact.ConatctID)){

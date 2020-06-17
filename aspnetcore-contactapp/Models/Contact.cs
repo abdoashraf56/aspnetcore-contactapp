@@ -42,6 +42,5 @@ namespace aspnetcore_contactapp.Models
         
         public virtual Tag Tag { get; set; }
 
-
     }
 }
