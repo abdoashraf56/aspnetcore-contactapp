@@ -1,5 +1,4 @@
 import React from 'react'
-import female_avatar from '../../images/female_avatar.svg'
 import profile from '../../images/male_avatar.svg'
 
 class ContactDetails extends React.Component {

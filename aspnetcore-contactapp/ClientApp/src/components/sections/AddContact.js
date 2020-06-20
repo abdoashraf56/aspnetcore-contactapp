@@ -2,23 +2,7 @@ import React from 'react'
 import InputFormGroup from '../houses/InputFormGroup'
 import SelectFormGroup from '../houses/SelectFormGroup'
 import FileFormGroup from '../houses/FileFormGroup'
-import $ from 'jquery'
-import {ReadImage} from '../../Controllers/HomePagController'
-import Icon from '../houses/Icon'
 import SwitchIconAction from '../houses/SwitchIconAction'
-
-var EmptyContact = {
-    FirstName: "",
-    LastName: "",
-    PhoneNumber: "",
-    Email: "",
-    Avatar: "",
-    TwitterAccount: "",
-    FacebookAccount: "",
-    Website: "",
-    Label: "",
-    Tag: ""
-}
 
 class AddContact extends React.Component {
 
@@ -49,11 +33,11 @@ class AddContact extends React.Component {
                                 return <InputFormGroup value={this.props.tempale[key]} title={key} type={"email"} />
                             }
 
-                            if (key == "tagID") {
+                            if (key === "tagID") {
                                 return <div></div>
                             }
 
-                            if(key == "conatctID"){
+                            if(key === "conatctID"){
                                 return <input name="conatctID" type="hidden" value={this.props.tempale[key]}></input>
                             }
 
@@ -61,7 +45,7 @@ class AddContact extends React.Component {
                                 return <InputFormGroup value={this.props.tempale[key]} title={key} type={"tel"} />
                             }
 
-                            if (key == "tag") {
+                            if (key === "tag") {
                                 return <SelectFormGroup value={this.props.tempale[key]} title={key} options={this.props.options} />
                             }
 

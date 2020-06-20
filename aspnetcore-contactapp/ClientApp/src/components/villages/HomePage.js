@@ -8,7 +8,7 @@ import AddContact from '../sections/AddContact'
 import Title from '../houses/Title'
 import Subtitle from '../houses/Subtitle'
 import $ from 'jquery'
-import authService from './../api-authorization/AuthorizeService'
+
 
 //this is the temple object of json reponse
 var empty = {
@@ -33,7 +33,6 @@ var orginalState = {
     current: {},
 }
 
-var currentScroll = "A"
 
 class HomePage extends React.Component {
     state = {
@@ -110,7 +109,7 @@ class HomePage extends React.Component {
         }
 
         //Check if their is avatar image upload 
-        if (requestBody.avatar != "") {
+        if (requestBody.avatar !== "") {
             //Read the avatar image file and get byte[] of it
             var data  = await ReadImage(requestBody.avatar)
             requestBody.avatar = data.split("base64,")[1]
